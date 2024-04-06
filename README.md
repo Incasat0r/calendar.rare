@@ -12,13 +12,11 @@ calendar::month(2024, 3);
 ```
 ## Обратная связь 
 Со мной: 
-```
-discord: Incasator.#0
-telegram: Incassator_0
-```
+1. [discord](https://discord.com/users/932881116006875266)
+2. [Telegram](https://t.me/Incassator_0)
+
 
 С разработчиком языка:
-```
-discord: topcatto#0
-```
+1. [discord](https://discord.com/users/686961276911747113)
+
 
