@@ -1,0 +1,109 @@
+import console as cl;
+import typing as tp;
+
+tp::void export->month(tp::number year, tp::number month) {
+    tp::map months := tp::map(tp::number, tp::string);
+
+    months->set(1, "January");
+    months->set(2, "February");
+    months->set(3, "March");
+    months->set(4, "April");
+    months->set(5, "May");
+    months->set(6, "June");
+    months->set(7, "July");
+    months->set(8, "August");
+    months->set(9, "September");
+    months->set(10, "October");
+    months->set(11, "November");
+    months->set(12, "December");
+
+    tp::map monthdays := tp::map(tp::string, tp::number);
+
+    monthdays->set("January", 31);
+    monthdays->set("March", 31);
+    monthdays->set("April", 30);
+    monthdays->set("May", 31);
+    monthdays->set("June", 30);
+    monthdays->set("July", 31);
+    monthdays->set("August", 31);
+    monthdays->set("September", 30);
+    monthdays->set("October", 31);
+    monthdays->set("November", 30);
+    monthdays->set("December", 31);
+
+    tp::bool isset := false;
+
+    cond year % 4 = 0 {
+        cond year % 100 != 0 {
+            monthdays->set("February", 29);
+            isset := true;
+        } else {
+            monthdays->set("February", 28);
+        }
+    }
+    cond isset != true {
+        cond year % 400 = 0 {
+            monthdays->set("February", 29);
+        } else {
+            monthdays->set("February", 28);
+        }
+    }
+
+    cond month >= 1 {
+        cond month <= 2 {
+            year := year - 1;
+        }
+    }
+
+    cond month < 3 {
+        tp::number a := month + 10;
+    } else {
+        tp::number a := month - 2;
+    }
+
+    tp::number b := 1;
+    tp::number c := year % 100;
+    tp::number d := year // 100;
+    tp::number w := 13 * a - 1;
+    w := w // 5;
+    tp::number x := c // 4;
+    tp::number y := d // 4;
+    tp::number z := w + x + y + b + c - 2 * d;
+    tp::number r := z % 7;
+    r := r + 7;
+    r := r % 7;
+
+    cl::out("    " + months->get(month) + " " + tp::string(year));
+    cl::out("Su Mo Tu We Th Fr Sa");
+
+    tp::number number := monthdays->get(months->get(month));
+    tp::number startDays := r;
+    tp::string datapart := "";
+
+    tp::number i := 1;
+    tp::number datapartLoop := 0;
+    tp::number lastCond := 0;
+    while i <= number {
+     cond i = 1 {
+        datapartLoop := 0;
+        while datapartLoop < startDays {
+            datapart := datapart + "   ";
+            datapartLoop := datapartLoop + 1;
+        }
+
+     }
+     cond i < 10 {
+        datapart := datapart + " " + tp::string(i) + " ";
+     }
+     cond i >= 10 {
+        datapart := datapart + tp::string(i) + " ";
+     }
+     lastCond := i + startDays;
+     cond lastCond % 7 = 0 {
+        cl::out(datapart);
+        datapart := "";
+     }
+     i := i + 1;
+    }
+  cl::out(datapart);
+}
