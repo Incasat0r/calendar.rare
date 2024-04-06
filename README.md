@@ -1,5 +1,5 @@
 # calendar.rare
-Официальная библеотека для языка **RareScript**
+Официальная библиотека для языка **RareScript**
 ## Примеры
 ```
 rare add calendar
