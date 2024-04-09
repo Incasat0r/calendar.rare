@@ -1,5 +1,5 @@
 {
   "name": "Calendar",
   "file": "calendar.rare",
-  "modules": []
+  "modules": ["pad"]
 }
