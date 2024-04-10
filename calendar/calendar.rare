@@ -3,57 +3,20 @@ import typing as tp;
 import pad;
 
 tp::bool isLeapYear(tp::number year) {
-    cond year % 4 = 0 {
-      cond year % 100 != 0 {
-        return true;
-      }
-    }
-    cond year % 400 = 0 {
-      return true;
-    }
-    return false;
+  return year % 4 = 0 and year % 100 != 0 or year % 400 = 0;
 }
 
 tp::number getNumDaysInMonth(tp::number year, tp::number month) {
-    cond month = 1 {
-      return 31;
+  cond month = 1 or month = 3 or month = 5 or month = 7 or month = 8 or month = 10 or month = 12 {
+    return 31;
+  }
+  cond month = 2 {
+    cond isLeapYear(year) {
+      return 29;
     }
-    cond month = 3 {
-      return 31;
-    }
-    cond month = 5 {
-      return 31;
-    }
-    cond month = 7 {
-      return 31;
-    }
-    cond month = 8 {
-      return 31;
-    }
-    cond month = 10 {
-      return 31;
-    }
-    cond month = 12 {
-      return 31;
-    }
-    cond month = 4 {
-      return 30;
-    }
-    cond month = 6 {
-      return 30;
-    }
-    cond month = 9 {
-      return 30;
-    }
-    cond month = 11 {
-      return 30;
-    }
-    cond month = 2 {
-      cond isLeapYear(year) {
-        return 29;
-      }
-      return 28;
-    }
+    return 28;
+  }
+  return 30;
 }
 
 tp::string getNameOfMonth(tp::number month) {
@@ -93,62 +56,50 @@ tp::string getNameOfMonth(tp::number month) {
   cond month = 12 {
     return "December";
   }
-
-
 }
 
 tp::void export->month(tp::number year, tp::number month) {
-    cl::out(pad::center(getNameOfMonth(month) + " " + tp::string(year), " ", 20));
-    cl::out("Mo Tu We Th Fr Sa Su");
-    tp::number startDay := 0;
-    tp::number i := 1;
-    while i < year {
-        startDay := startDay + 365;
-        cond isLeapYear(i) {
-          startDay := startDay + 1;
-        }
-        i := i + 1;
-    }
-    i := 1;
-    while i < month {
-      startDay := startDay + getNumDaysInMonth(year, i);
-      i := i + 1;
-    }
-    startDay := startDay % 7;
-    tp::string end := "";
-
-    tp::number numDays := getNumDaysInMonth(year, month);
-    tp::number day := 1;
-    tp::string output := "";
-    while day < numDays + 1 {
-      cond day < 10 {
-        output := output + " " + tp::string(day) + " ";
-      }
-      cond day >= 10 {
-        output := output + tp::string(day) + " ";
-      }
-
+  cl::out(pad::center(getNameOfMonth(month) + " " + tp::string(year), " ", 20));
+  cl::out("Mo Tu We Th Fr Sa Su");
+  tp::number startDay := 0;
+  tp::number i := 1;
+  while i < year {
+    startDay := startDay + 365;
+    cond isLeapYear(i) {
       startDay := startDay + 1;
-      startDay := startDay % 7;
-        cond startDay = 0 {
-          cond output != "" {
-            cl::out(output);
-          }
-          output := "";
-        }
-      day := day + 1;
     }
-    cl::out(output);
-
-    tp::string endStrings := "";
-    i := 1;
-    cond startDay != 0 {
-      while i < 7 - startDay {
-        endStrings := endStrings + "   ";
-        i := i + 1;
-      }
-
+    i := i + 1;
+  }
+  i := 1;
+  while i < month {
+    startDay := startDay + getNumDaysInMonth(year, i);
+    i := i + 1;
+  }
+  startDay := startDay % 7;
+  tp::string end := "";
+  tp::number numDays := getNumDaysInMonth(year, month);
+  tp::number day := 1;
+  tp::string output := "   ";
+  output := output->repeat(startDay);
+  while day < numDays + 1 {
+    cond day < 10 {
+      output := output + " " + tp::string(day) + " ";
     }
-    cl::out(endStrings);
-
+    cond day >= 10 {
+      output := output + tp::string(day) + " ";
+    }
+    startDay := startDay + 1;
+    startDay := startDay % 7;
+    cond startDay = 0 {
+      cl::out(output);
+      output := "";
+    }
+    day := day + 1;
+  }
+  cond startDay != 0 {
+    tp::string endStrings := "   ";
+    output := output + endStrings->repeat(7 - startDay);
+  }
+  cl::out(output);
+  cl::out();
 }
