@@ -1,6 +1,7 @@
 import console as cl;
 import typing as tp;
 import pad;
+import std;
 
 tp::bool isLeapYear(tp::number year) {
   return year % 4 = 0 and year % 100 != 0 or year % 400 = 0;
@@ -80,19 +81,18 @@ tp::void export->month(tp::number year, tp::number month) {
   tp::number numDays := getNumDaysInMonth(year, month);
   tp::number day := 1;
   tp::string output := "   ";
-  output := output->repeat(startDay);
+  std::out(output->repeat(startDay));
   while day < numDays + 1 {
     cond day < 10 {
-      output := output + " " + tp::string(day) + " ";
+      std::out(" " + tp::string(day) + " ");
     }
     cond day >= 10 {
-      output := output + tp::string(day) + " ";
+      std::out(tp::string(day) + " ");
     }
     startDay := startDay + 1;
     startDay := startDay % 7;
     cond startDay = 0 {
-      cl::out(output);
-      output := "";
+      cl::out();
     }
     day := day + 1;
   }
