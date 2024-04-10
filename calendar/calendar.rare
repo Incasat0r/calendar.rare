@@ -21,42 +21,8 @@ tp::number getNumDaysInMonth(tp::number year, tp::number month) {
 }
 
 tp::string getNameOfMonth(tp::number month) {
-  cond month = 1 {
-    return "January";
-  }
-  cond month = 2 {
-    return "February";
-  }
-  cond month = 3 {
-    return "March";
-  }
-  cond month = 4 {
-    return "April";
-  }
-  cond month = 5 {
-    return "May";
-  }
-  cond month = 6 {
-    return "June";
-  }
-  cond month = 7 {
-    return "July";
-  }
-  cond month = 8 {
-    return "August";
-  }
-  cond month = 9 {
-    return "September";
-  }
-  cond month = 10 {
-    return "October";
-  }
-  cond month = 11 {
-    return "November";
-  }
-  cond month = 12 {
-    return "December";
-  }
+  tp::array months := tp::array(tp::string, "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+  return months->@month;
 }
 
 tp::void export->month(tp::number year, tp::number month) {
